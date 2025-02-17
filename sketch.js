@@ -18,7 +18,7 @@ let bezierPoints = [P0,P1,P2,P3]
 function setup() {
   createCanvas(1200, 700);
 }
-
+//ananas
 function draw() {
   background(220);
   movePoint()
