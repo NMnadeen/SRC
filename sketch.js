@@ -1,5 +1,5 @@
 //KODE FRA ANDERS
-
+//MANGO??
 let P0 = {x: 50, y: 350, relativX: undefined, relativY: undefined};
 let P1 = {x: 100, y: 50, relativX: undefined, relativY: undefined};
 let P2 = {x: 300, y: 50, relativX: undefined, relativY: undefined};
@@ -18,7 +18,7 @@ let bezierPoints = [P0,P1,P2,P3]
 function setup() {
   createCanvas(1200, 700);
 }
-//ananas
+
 function draw() {
   background(220);
   movePoint()
