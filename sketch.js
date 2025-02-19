@@ -2,33 +2,39 @@
 //MANGO??
 let P0 = {x: 50, y: 350, relativX: undefined, relativY: undefined};
 let P1 = {x: 100, y: 50, relativX: undefined, relativY: undefined};
-let P2 = {x: 300, y: 50, relativX: undefined, relativY: undefined};
-let P3 = {x: 350, y: 350, relativX: undefined, relativY: undefined};
+let P2 = {x: 300, y: 350, relativX: undefined, relativY: undefined};
+let P3 = {x: 500, y: 650, relativX: undefined, relativY: undefined};
+let P4 = {x: 550, y: 350, relativX: undefined, relativY: undefined};
 let A = {x: undefined, y: undefined};
 let B = {x: undefined, y: undefined};
+
 let C = {x: undefined, y: undefined};
 let D = {x: undefined, y: undefined};
-let E = {x: undefined, y: undefined};
+//let E = {x: undefined, y: undefined};
+let Q = {x: undefined, y: undefined};
 let P = {x: undefined, y: undefined};
-let t=0
-let pd=20
 
-let bezierPoints = [P0,P1,P2,P3]
+let t=0
+let pd=15
+
+let bezierPoints = [P0,P1,P2,P3,P4]
 
 function setup() {
   createCanvas(1200, 700);
-}
+} 
 
 function draw() {
   background(220);
   movePoint()
+  calcD()
   for(let t=0; t<1; t+=0.001){
     calcBezier(t);
+    //calcD();
     drawBezier();
   }
-  drawPoints()
+  text("Klik og hiv punkterne for at ændre bezierkurven",300,100)
   supportLines()
-  text("Click & drag the points to change the bézier curve",50,375)
+  drawPoints()
 }
 
 function calcBezier(t){
@@ -38,22 +44,51 @@ function calcBezier(t){
   B.y=lerp(P1.y,P2.y,t)
   C.x=lerp(P2.x,P3.x,t)
   C.y=lerp(P2.y,P3.y,t)
-  D.x=lerp(A.x,B.x,t)
-  D.y=lerp(A.y,B.y,t)
-  E.x=lerp(B.x,C.x,t)
-  E.y=lerp(B.y,C.y,t)
-  P.x=lerp(D.x,E.x,t)
-  P.y=lerp(D.y,E.y,t)
+  D.x=lerp(P3.x,P4.x,t)
+  D.y=lerp(P3.y,P4.y,t)
+  Q.x=lerp(C.x,D.x,t)
+  Q.y=lerp(C.y,D.y,t) 
+  P.x=lerp(A.x,B.x,t)
+  P.y=lerp(A.y,B.y,t)
+}
+
+function calcD(){
+  t = 1
+  PxMærke = (2*(1-t)*((P1.x)-(P0.x))+2*t*((P2.x)-(P1.x)))
+  PyMærke = (2*(1-t)*((P1.y)-(P0.y))+2*t*((P2.y)-(P1.y)))
+  PHældning = PyMærke/PxMærke
+  
+  t = 0
+  QxMærke = (2*(1-t)*((P3.x)-(P2.x))+2*t*((P4.x)-(P3.x)))
+  QyMærke = (2*(1-t)*((P3.y)-(P2.y))+2*t*((P4.y)-(P3.y)))
+  QHældning = QyMærke/QxMærke
+  HældningTjek(PHældning,QHældning);
+
+  text("P'(1) er "+PHældning,50,650)  
+  text("Q'(0) er "+QHældning,50,670)  
+
+
+}
+
+function HældningTjek(PHældning,QHældning){
+  if(PHældning==QHældning){
+    //console.log('true')
+    background(112, 212, 110)
+    text("Hældningerne er ens, der er dannet en glat spline! :)",50,690)
+  }
 }
 
 function supportLines(){
   line(P0.x,P0.y,P1.x,P1.y);
   line(P1.x,P1.y,P2.x,P2.y);
-  line(P2.x,P2.y,P3.x,P3.y);
+  line(P2.x,P2.y,P3.x,P3.y);  
+  line(P3.x,P3.y,P4.x,P4.y);
+
 }
 
 function drawBezier(){
-  circle(P.x,P.y,15);
+  circle(P.x,P.y,7);
+  circle(Q.x,Q.y,7);
 }
 
 function drawPoints(){
@@ -61,6 +96,7 @@ function drawPoints(){
   circle(P1.x,P1.y,pd);
   circle(P2.x,P2.y,pd);
   circle(P3.x,P3.y,pd);
+  circle(P4.x,P4.y,pd);
 }
 
 function movePoint(){
