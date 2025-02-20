@@ -52,6 +52,7 @@ function calcBezier(t){
   P.y=lerp(A.y,B.y,t)
 }
 
+//Hældningerne beregnes for de to kurver i punktet p__2, og teksten skriver 
 function calcD(){
   t = 1
   PxMærke = (2*(1-t)*((P1.x)-(P0.x))+2*t*((P2.x)-(P1.x)))
@@ -70,6 +71,7 @@ function calcD(){
 
 }
 
+//Hvis hældningerne på det to kurver er ens, skiftes baggrundens farve til grøn og der kommer en text på skærmen som bekræfter det.
 function HældningTjek(PHældning,QHældning){
   if(PHældning==QHældning){
     //console.log('true')
@@ -122,10 +124,10 @@ function mouseReleased(){
     bezierPoints[i].relativX=undefined
     bezierPoints[i].relativY=undefined
   } 
-}
+} 
 
 /*
-/////////// version til et virkårligt antal punkter
+/////////// version til et virkårligt antal punkter || Bruges IKKE i SRC, men er gemt til eget brug
 let points = [ [0, 128], [128, 0], [256, 0], [384, 128] ]
 function drawDecasteljau(points){
   for(let i = 0; i < 1; i+=0.001){
