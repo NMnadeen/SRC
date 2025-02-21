@@ -53,20 +53,24 @@ function calcBezier(t){
 }
 
 //Hældningerne beregnes for de to kurver i punktet p__2, og teksten skriver 
+//Ændring i x- og y- er taget fra formlen for b'(t)
 function calcD(){
-  t = 1
-  PxMærke = (2*(1-t)*((P1.x)-(P0.x))+2*t*((P2.x)-(P1.x)))
-  PyMærke = (2*(1-t)*((P1.y)-(P0.y))+2*t*((P2.y)-(P1.y)))
-  PHældning = PyMærke/PxMærke
+  t = 1 //t-værdi for endepunktet i P(t)
+  PxMærke = (2*(1-t)*((P1.x)-(P0.x))+2*t*((P2.x)-(P1.x))) //Beregn ændring i x for den første kurve
+  PyMærke = (2*(1-t)*((P1.y)-(P0.y))+2*t*((P2.y)-(P1.y))) //Beregn ændring i y for den første kurve
+  PHældning = PyMærke/PxMærke //Beregn den første kurves hældning
   
-  t = 0
-  QxMærke = (2*(1-t)*((P3.x)-(P2.x))+2*t*((P4.x)-(P3.x)))
-  QyMærke = (2*(1-t)*((P3.y)-(P2.y))+2*t*((P4.y)-(P3.y)))
-  QHældning = QyMærke/QxMærke
-  HældningTjek(PHældning,QHældning);
 
-  text("P'(1) er "+PHældning,50,650)  
-  text("Q'(0) er "+QHældning,50,670)  
+  t = 0 //t-værdi for Begyndelsespunktet i Q(t)
+  QxMærke = (2*(1-t)*((P3.x)-(P2.x))+2*t*((P4.x)-(P3.x))) //Beregn ændring i x for den anden kurve
+  QyMærke = (2*(1-t)*((P3.y)-(P2.y))+2*t*((P4.y)-(P3.y))) //Beregn ændring i y for den anden kurve
+  QHældning = QyMærke/QxMærke //Beregn den anden kurves hældning
+
+
+  HældningTjek(PHældning,QHældning); //tjek om hældninger er ens
+
+  text("P'(1) er "+PHældning,50,650) //skriv den første kurves hælding
+  text("Q'(0) er "+QHældning,50,670) //skriv den anden kurves hældning
 
 
 }
@@ -74,7 +78,7 @@ function calcD(){
 //Hvis hældningerne på det to kurver er ens, skiftes baggrundens farve til grøn og der kommer en text på skærmen som bekræfter det.
 function HældningTjek(PHældning,QHældning){
   if(PHældning==QHældning){
-    //console.log('true')
+    //console.log('true')   
     background(112, 212, 110)
     text("Hældningerne er ens, der er dannet en glat spline! :)",50,690)
   }
@@ -158,4 +162,14 @@ function crlPtReduceDeCasteljau(points, t) {
 	return retArr;
 }
 ////////////////
+*/
+
+/*
+
+function movePoint()
+  for hvert kontrolpunkt i bezierPoints
+    hvis relativX og relativY er defineret i punktet
+      opdater punktets X position med musensX + relativX
+      opdater punktets Y position med musensY + relativY
+
 */
